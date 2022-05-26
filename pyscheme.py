@@ -1,3 +1,4 @@
+# interpretation of Lox from https://craftinginterpreters.com/
 import sys
 
 
@@ -23,7 +24,7 @@ class Scheme:
     def runPrompt(self):
         while True:
             try:
-                line = input("")
+                line = input(">")
                 self.run(line)
                 self.hadError = False
 
@@ -42,4 +43,4 @@ class Scheme:
 
 
 if __name__ == "__main__":
-    Scheme().main()
+    # Scheme().main()
