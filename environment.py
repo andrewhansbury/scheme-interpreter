@@ -1,44 +1,66 @@
-import parser
+
 import math
 import operator as op
 
 
-class Environment:
+# The lamba for 'find' in Environment will call this function
+def find(x, y):
+    with open(y) as file:
+        data = file.read()
+        if x in data:
+            return True
+    return False
+
+
+class Environment(dict):
 
     def __init__(self) -> None:
+        self.initialize_default()
 
-    def standard_env() -> Env:
-        "An environment with some Scheme standard procedures."
-        env = Env()
-        env.update(vars(math))  # sin, cos, sqrt, pi, ...
-        env.update({
-            '+': op.add, '-': op.sub, '*': op.mul, '/': op.truediv,
-            '>': op.gt, '<': op.lt, '>=': op.ge, '<=': op.le, '=': op.eq,
-            'abs':     abs,
-            'append':  op.add,
-            'apply': lambda proc, args: proc(*args),
+    def initialize_default(self):
+        self.update(vars(math))  # sin, cos, sqrt, pi, ...
+        self.update({
+
+            # Standard Math operations (+,-,/,*, %)
+            '+': lambda x, y: x + y,
+            '-': lambda x, y: x - y,
+            '*': lambda x, y: x * y,
+            '/': lambda x, y: x / y,
+            '%': lambda x, y: x % y,
+
+            # Comparison Operators
+            '>': lambda x, y: x > y,
+            '<': lambda x, y: x < y,
+            '>=': lambda x, y: x >= y,
+            '<=': lambda x, y: x <= y,
+
+            # Max and Min operations
+            'max': lambda x, y: max(x, y),
+            'min': lambda x, y: min(x, y),
+
+
+            # Begin is necessary to implement functions
             'begin': lambda *x: x[-1],
-            'car': lambda x: x[0],
-            'cdr': lambda x: x[1:],
-            'cons': lambda x, y: [x] + y,
+
+            # Add ons:
+            # (exp first second) ;  the exp will take the first given int and raise it to the power of the second
+            'exp': lambda x, y: x**y,
+
+            # (find, word, filename) ; find will look for a word in a given text file and evaluate to true if found, and false if not
+            'find': lambda x, y: find(x, y),
+
+
             'eq?':     op.is_,
             'expt':    pow,
             'equal?':  op.eq,
             'length':  len,
-            'list': lambda *x: List(x),
-            'list?': lambda x: isinstance(x, List),
-            'map':     map,
-            'max':     max,
-            'min':     min,
+
+
+
+
             'not':     op.not_,
             'null?': lambda x: x == [],
-            'number?': lambda x: isinstance(x, Number),
+            'number?': lambda x: isinstance(x, int),
             'print': print,
-            'procedure?': callable,
             'round':   round,
-            'symbol?': lambda x: isinstance(x, Symbol),
         })
-        return env
-
-
-global_env = standard_env()

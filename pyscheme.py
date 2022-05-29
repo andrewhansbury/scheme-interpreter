@@ -1,5 +1,8 @@
 # interpretation of Lox from https://craftinginterpreters.com/
 import sys
+from scanner import Scanner
+from parser import Parser
+from interpreter import Interpreter
 
 
 class Scheme:
@@ -43,4 +46,4 @@ class Scheme:
 
 
 if __name__ == "__main__":
-    # Scheme().main()
+    Scheme().main()

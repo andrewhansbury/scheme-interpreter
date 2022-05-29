@@ -1,5 +1,5 @@
 # Inspired by http://norvig.com/lispy.html
-from toml import TomlEncoder
+
 from scanner import Scanner
 from collections import deque
 
@@ -12,10 +12,13 @@ class Parser:
 
     def scanTokens(self, scheme: str) -> None:
 
-        tokens: list = self.scanner.separateTokens(scheme)
-        tokens: deque = deque(tokens)
+        if not isinstance(scheme, deque):
+            tokens: list = self.scanner.separateTokens(scheme)
+            tokens: deque = deque(tokens)
+        else:
+            tokens = scheme
 
-        if len(tokens == 0):
+        if len(tokens) == 0:
             raise SyntaxError("Error: Unexpected EOF")
         token = tokens.popleft()
 
@@ -33,7 +36,7 @@ class Parser:
     def addToken(self, token: str):
         if token.isnumeric():
             return int(token)
-        elif '.' in token:
+        elif '.' in token and token.isdigit():
             return float(token)
         else:
-            return token
+            return str(token)
