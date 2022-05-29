@@ -12,6 +12,9 @@ if __name__ == "__main__":
 
     code3 = parser.scanTokens("(find banana text.txt)")
 
+    code4 = parser.scanTokens(
+        "(begin (define x 11)(if (< x 10)x(if (> x 20)x(* x 2))))")
+
     interpreter = Interpreter()
 
     print(interpreter.interpret(code))
@@ -19,3 +22,5 @@ if __name__ == "__main__":
     print(interpreter.interpret(code2))
 
     print(interpreter.interpret(code3))
+
+    print(interpreter.interpret(code4))
