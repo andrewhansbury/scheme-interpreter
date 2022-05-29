@@ -33,6 +33,11 @@ class Environment(dict):
             '<': lambda x, y: x < y,
             '>=': lambda x, y: x >= y,
             '<=': lambda x, y: x <= y,
+            '=': lambda x,y: x==y,
+            'equal?': lambda x,y: x==y,
+            'eq?': lambda x,y : x is y,
+             
+            
 
             # Max and Min operations
             'max': lambda x, y: max(x, y),
@@ -50,9 +55,7 @@ class Environment(dict):
             'find': lambda x, y: find(x, y),
 
 
-            'eq?':     op.is_,
-            'expt':    pow,
-            'equal?':  op.eq,
+
             'length':  len,
 
 
