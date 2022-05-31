@@ -1,28 +1,21 @@
-# interpretation of Lox from https://craftinginterpreters.com/
 import sys
-from scanner import Scanner
 from parser import Parser
 from interpreter import Interpreter
 
 
 class Scheme:
     def __init__(self):
-        pass
+        self.interpreter = Interpreter()
 
     def run(self, source: str):
         self.hadError = False
-        scanner = Scanner(source, self)
-        scanner.scanTokens()
-        tokens = scanner.tokens
-
-        parser: Parser = Parser(tokens, self)
-        statements = parser.parse()
-
-        # expression = parser.parse()
+        #parser will create scanner first before parsing
+        parser: Parser = Parser()
+        statements = parser.parseTokens(source)
 
         if self.hadError:
             return
-        self.interpreter.interpret(statements)
+        print(self.interpreter.interpret(statements))
 
     def runPrompt(self):
         while True:
@@ -47,3 +40,4 @@ class Scheme:
 
 if __name__ == "__main__":
     Scheme().main()
+ 

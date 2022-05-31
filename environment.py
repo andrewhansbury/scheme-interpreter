@@ -1,26 +1,12 @@
-
-import math
-import operator as op
-
-
-# The lamba for 'find' in Environment will call this function
-def find(x, y):
-    with open(y) as file:
-        data = file.read()
-        if x in data:
-            return True
-    return False
-
-
+import random
 class Environment(dict):
 
     def __init__(self) -> None:
         self.initialize_default()
 
     def initialize_default(self):
-        self.update(vars(math))  # sin, cos, sqrt, pi, ...
-        self.update({
 
+        self.update({
             # Standard Math operations (+,-,/,*, %)
             '+': lambda x, y: x + y,
             '-': lambda x, y: x - y,
@@ -35,35 +21,45 @@ class Environment(dict):
             '<=': lambda x, y: x <= y,
             '=': lambda x,y: x==y,
             'equal?': lambda x,y: x==y,
-            'eq?': lambda x,y : x is y,
-             
-            
-
-            # Max and Min operations
+    
+    
+            #Extra math operations
             'max': lambda x, y: max(x, y),
             'min': lambda x, y: min(x, y),
-
+            'exp': lambda x, y: x**y,
+            'pi' : 3.141592653589793,
 
             # Begin is necessary to implement functions
             'begin': lambda *x: x[-1],
 
             # Add ons:
-            # (exp first second) ;  the exp will take the first given int and raise it to the power of the second
-            'exp': lambda x, y: x**y,
-
-            # (find, word, filename) ; find will look for a word in a given text file and evaluate to true if found, and false if not
             'find': lambda x, y: find(x, y),
-
-
-
-            'length':  len,
-
-
-
-
-            'not':     op.not_,
-            'null?': lambda x: x == [],
-            'number?': lambda x: isinstance(x, int),
-            'print': print,
-            'round':   round,
+            'counter': lambda x,y: countFile(x,y),
+            'random': lambda x,y: generateRandom(x,y)
+         
         })
+
+# The lambda for 'find', 'count' and 'random' in Environment will call these function
+def find(x, y):
+    with open(y) as file:
+        data = file.read()
+        if x in data:
+            return True
+    return False
+
+
+def countFile(x, y):
+    count = 0
+    with open(y) as file:
+        data = file.read()
+        for word in data.split():
+            if word == x:
+                count +=1
+
+    return count
+
+
+def generateRandom(x,y):
+    num = random.randint(x,y)
+    return num
+

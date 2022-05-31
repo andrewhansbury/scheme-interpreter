@@ -1,0 +1,92 @@
+Testing for pyscheme.
+#Arithmetic 
+(+ 10 5)
+15
+(+ 5 -11)
+-6
+(- 10 7)
+3
+(- 10 -5)
+15
+(* 3 4)
+12
+(/ 5 2)
+2.5
+(/ 10 5)
+2
+(% 10 3)
+1
+(% 10 5)
+0
+
+
+#Comparison Tests
+(> 1 0)
+True
+(> 0 1)
+False
+(< 1 0)
+False
+(< 0 1)
+True
+
+(>= 1 1)
+True
+(>= 0 1)
+False
+(<= 1 1)
+True
+(<= 1 0)
+False
+
+(= 1 1)
+True
+(= 1 0)
+False
+
+(equal? 1 1)
+True
+(equal? 1 0)
+False
+
+(max 3 5)
+5
+(min 3 5)
+3
+(exp 2 3)
+8
+
+#Nested expression testing
+(+ 3 (- 5 10))
+-2
+(- 3 (+ 5 10))
+-12
+
+#Add-on testing 
+(find banana text.txt)
+True
+(find andrew text.txt)
+True
+
+(counter is text.txt)
+3
+(counter andrew text.txt)
+0
+
+#defining varibales testing
+(begin(define x 5) (* x 10))
+50
+(begin (define x 10) (define y 25) (+ x y))
+35
+
+#Functions to test if Conditionals 
+(begin (define x 11)(if (< x 10)x(if (> x 20)x(* x 2))))
+22
+
+(begin (define x 25)(if (< x 10)x(if (> x 20)x(* x 2))))
+25
+
+(begin (define x 3)(if (< x 10)x(if (> x 20)x(* x 2))))
+3
+
+
